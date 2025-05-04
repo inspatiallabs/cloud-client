@@ -1,0 +1,18 @@
+{
+  "name": "@inspatial/cloud-client",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"]
+  },
+  "exports": {
+    ".": "./mod.ts",
+    "./types": "./types.ts"
+  },
+  "imports": {
+    "#/": "./src/"
+  },
+  "tasks": {
+    "check": "deno publish --dry-run"
+  }
+}
