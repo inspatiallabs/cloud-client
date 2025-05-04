@@ -19,7 +19,7 @@ export type {
   Choice,
   FetchOptions,
   IDMode,
-  InField as ORMField,
+  InField,
   InFieldMap,
   InFieldType,
   InValue,
