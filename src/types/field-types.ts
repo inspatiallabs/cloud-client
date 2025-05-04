@@ -1,11 +1,11 @@
 import type { FileTypes, ImageFileType } from "#/types/file-types.ts";
 
-export type FieldType = keyof FieldMap;
-export type ORMField<T extends FieldType = FieldType> = FieldMap[T];
-export type InValue<T extends keyof ORMValueTypeMap = keyof ORMValueTypeMap> =
-  ORMValueTypeMap[T];
+export type InFieldType = keyof InFieldMap;
+export type InField<T extends InFieldType = InFieldType> = InFieldMap[T];
+export type InValue<T extends keyof InValueTypeMap = keyof InValueTypeMap> =
+  InValueTypeMap[T];
 
-export type FieldMap = {
+export type InFieldMap = {
   DataField: DataField;
   TextField: TextField;
   IntField: IntField;
@@ -201,7 +201,7 @@ export interface Choice {
   label: string;
 }
 
-type ORMValueTypeMap = {
+type InValueTypeMap = {
   IDField: string;
   DataField: string;
   IntField: number;

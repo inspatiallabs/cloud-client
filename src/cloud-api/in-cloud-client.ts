@@ -1,4 +1,5 @@
 import type { CloudAPIDocs } from "#/types/docs-types.ts";
+import type { Entry } from "#/types/entry-types.ts";
 import type { ErrorInfo, NotificationInfo } from "./api-client-types.ts";
 import { AuthGroup } from "./groups/auth-group.ts";
 import { EntryGroup } from "./groups/entry-group.ts";
@@ -135,7 +136,7 @@ export class InCloudClient {
     fileName: string;
     file: File;
     progressCallback?: (progress: ProgressEvent, uid?: string) => void;
-    completeCallback?: (response: unknown, uid?: string) => void;
+    completeCallback?: (file: Entry) => void;
     errorCallback?: (response: unknown, uid?: string) => void;
     abortCallback?: (response: unknown, uid?: string) => void;
   }): void {

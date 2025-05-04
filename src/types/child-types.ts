@@ -6,8 +6,9 @@ export interface ChildEntryConfig extends BaseTypeConfig {
   parentEntryType?: string;
 }
 
-export interface ChildEntryTypeInfo extends Omit<BaseType, "children"> {
+export interface ChildEntryType extends Omit<BaseType, "children"> {
 }
 
 export interface ChildEntry extends Entry {
+  order: number;
 }

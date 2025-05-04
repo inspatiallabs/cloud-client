@@ -1,4 +1,4 @@
-import type { IDMode, InValue, ORMField } from "#/types/field-types.ts";
+import type { IDMode, InField, InValue } from "#/types/field-types.ts";
 import type { BaseType, BaseTypeConfig } from "#/types/shared-types.ts";
 import type { IDValue } from "#/types/mod.ts";
 
@@ -6,7 +6,7 @@ export interface EntryAction {
   key: string;
   label?: string;
   description?: string;
-  params: Array<ORMField>;
+  params: Array<InField>;
 }
 
 export interface EntryTypeConfig extends BaseTypeConfig {
@@ -20,7 +20,7 @@ export interface EntryTypeConfig extends BaseTypeConfig {
 export interface EntryType extends BaseType {
   config: EntryTypeConfig;
   actions: Array<EntryAction>;
-  defaultListFields: Array<ORMField>;
+  defaultListFields: Array<InField>;
 }
 
 export interface Entry {

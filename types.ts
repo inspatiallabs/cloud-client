@@ -1,7 +1,7 @@
 export type {
   ChildEntry,
   ChildEntryConfig,
-  ChildEntryTypeInfo,
+  ChildEntryType as ChildEntryTypeInfo,
 } from "#/types/child-types.ts";
 export type {
   CloudAPIActionDocs,
@@ -18,11 +18,11 @@ export type {
 export type {
   Choice,
   FetchOptions,
-  FieldMap,
-  FieldType,
   IDMode,
+  InField as ORMField,
+  InFieldMap,
+  InFieldType,
   InValue,
-  ORMField,
 } from "#/types/field-types.ts";
 export type {
   ApplicationFileType,
@@ -57,4 +57,20 @@ export type {
   NotificationInfo,
 } from "#/cloud-api/api-client-types.ts";
 
-export type { SocketStatus } from "#/in-live/in-live-types.ts";
+export type {
+  EntryEvent,
+  EntryEventDelete,
+  EntryEventJoin,
+  EntryEventLeave,
+  EntryEventMap,
+  EntryEventUpdate,
+  EntryListener,
+  EntryTypeEvent,
+  EntryTypeEventCreate,
+  EntryTypeEventDelete,
+  EntryTypeEventMap,
+  EntryTypeEventUpdate,
+  EntryTypeListener,
+  EntyCallbackMap,
+  SocketStatus,
+} from "#/in-live/in-live-types.ts";

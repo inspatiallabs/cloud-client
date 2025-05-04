@@ -1,4 +1,4 @@
-import type { ORMField } from "#/types/field-types.ts";
+import type { InField } from "#/types/field-types.ts";
 
 /**
  * The full documentation for an ActionsAPI instance in JSON format.
@@ -58,5 +58,5 @@ export interface CloudAPIActionDocs {
   /**
    * A list of parameters available for this action
    */
-  params: Array<ORMField>;
+  params: Array<InField>;
 }
