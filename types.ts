@@ -50,6 +50,8 @@ export type {
 export type {
   DBFilter,
   ErrorInfo,
+  FilterAll,
+  FilterOps,
   GetListResponse,
   InFilter,
   ListOptions,
