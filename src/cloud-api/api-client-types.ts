@@ -66,41 +66,51 @@ export type FilterOps =
   | EmptyOps
   | ListOps
   | ContainsOps;
-interface FilterBase {
-  field: string;
-}
 
-interface FilterInList extends FilterBase {
+type FilterInList = {
   op: ListOps;
   value: Array<string> | Array<number>;
-}
+};
 
-interface FilterEqual extends FilterBase {
+type FilterEqual = {
   op: EqualsOp;
   value: string | number;
-}
-interface FilterBetween extends FilterBase {
+};
+export type FilterBetween = {
   op: BetweenOps;
   value: [string, string] | [number, number];
-}
+};
 
-interface FilterEmpty extends FilterBase {
+type FilterEmpty = {
   op: EmptyOps;
-}
-interface FilterCompare extends FilterBase {
+};
+type FilterCompare = {
   op: ComparisonOp;
   value: string | number;
-}
+};
 
-interface FilterContains extends FilterBase {
+type FilterContains = {
   op: ContainsOps;
   value: string;
   caseSensitive?: boolean;
-}
-export type InFilter =
+};
+export type FilterAll =
   | FilterInList
   | FilterEqual
   | FilterBetween
   | FilterEmpty
   | FilterCompare
   | FilterContains;
+
+export type InFilter =
+  | FilterAll
+    & {
+      field: string;
+      or?: Array<FilterAll>;
+      and?: Array<FilterAll>;
+    }
+  | {
+    field: string;
+    or?: Array<FilterAll>;
+    and?: Array<FilterAll>;
+  };
