@@ -48,10 +48,10 @@ export type {
   SettingsWithTimestamp,
 } from "#/types/settings-types.ts";
 export type {
-  AdvancedFilter,
   DBFilter,
   ErrorInfo,
   GetListResponse,
+  InFilter,
   ListOptions,
   ListResponse,
   NotificationInfo,
