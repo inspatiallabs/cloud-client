@@ -16,7 +16,7 @@ export class EntryGroup {
     this.#call = call;
   }
 
-  async getEntry<T>(entryType: string, id: string): Promise<T> {
+  async getEntry<T = Entry>(entryType: string, id: string): Promise<T> {
     return await this.#call<T>("entry", "getEntry", { entryType, id });
   }
 
