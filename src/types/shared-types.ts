@@ -10,6 +10,7 @@ export interface BaseType {
   titleFields: Array<InField>;
   children?: Array<ChildEntryType>;
   displayFields: Array<InField>;
+  fieldGroups: Array<FieldGroup>;
 }
 
 export interface BaseTypeConfig {
@@ -25,4 +26,12 @@ export interface BaseTypeConfig {
     description: string;
     version?: string;
   };
+}
+
+export interface FieldGroup {
+  key: string;
+  label: string;
+  description?: string;
+  fields: Array<InField>;
+  displayFields: Array<InField>;
 }

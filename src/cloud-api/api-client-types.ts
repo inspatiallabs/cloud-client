@@ -36,7 +36,9 @@ export interface ListOptions {
   order?: "asc" | "desc";
 }
 
-export type DBFilter = Array<InFilter>;
+export type DBFilter =
+  | Array<InFilter>
+  | Record<string, string | number | null | boolean>;
 
 export interface GetListResponse<T = Record<string, InValue>> {
   rowCount: number;

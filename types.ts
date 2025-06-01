@@ -8,7 +8,7 @@ export type {
   CloudAPIDocs,
   CloudAPIGroupDocs,
 } from "#/types/docs-types.ts";
-
+export type { FieldGroup } from "#/types/shared-types.ts";
 export type {
   Entry,
   EntryAction,
