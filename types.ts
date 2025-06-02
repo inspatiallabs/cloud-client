@@ -22,6 +22,7 @@ export type {
   InField,
   InFieldMap,
   InFieldType,
+  IntFormat,
   InValue,
 } from "#/types/field-types.ts";
 export type {
