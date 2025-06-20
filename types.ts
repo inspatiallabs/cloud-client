@@ -74,6 +74,6 @@ export type {
   EntryTypeEventMap,
   EntryTypeEventUpdate,
   EntryTypeListener,
-  EntyCallbackMap,
+  EntryCallbackMap as EntyCallbackMap,
   SocketStatus,
 } from "#/in-live/in-live-types.ts";

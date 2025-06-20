@@ -72,7 +72,7 @@ export type EntryTypeListener<
 type EntryTypeName = string;
 type EntryId = string;
 type ListenerName = string;
-export type EntyCallbackMap = Map<EntryTypeName, {
+export type EntryCallbackMap = Map<EntryTypeName, {
   listeners: Map<ListenerName, EntryTypeListener>;
   entries: Map<EntryId, Map<ListenerName, EntryListener>>;
 }>;

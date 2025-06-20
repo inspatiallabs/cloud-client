@@ -1,24 +1,24 @@
 import type {
+  EntryCallbackMap,
   EntryEvent,
   EntryListener,
   EntryTypeEvent,
   EntryTypeListener,
-  EntyCallbackMap,
   SocketStatus,
 } from "./in-live-types.ts";
 import { InLiveClientBase } from "./in-live-base.ts";
 import type { Entry } from "#/types/entry-types.ts";
 
 export class InLiveClient {
-  #client: InLiveClientBase;
-  #callbacks: EntyCallbackMap = new Map();
+  client: InLiveClientBase;
+  #callbacks: EntryCallbackMap = new Map();
   #statusCallbacks: Map<
     string,
     (status: SocketStatus) => Promise<void> | void
   > = new Map();
 
   constructor(host?: string) {
-    this.#client = new InLiveClientBase(host);
+    this.client = new InLiveClientBase(host);
     this.#setupListeners();
   }
 
@@ -27,17 +27,17 @@ export class InLiveClient {
    * @param authToken The authentication token to use for the connection.
    */
   start(authToken?: string): void {
-    if (this.#client.connected) {
+    if (this.client.connected) {
       return;
     }
-    this.#client.connect(authToken);
+    this.client.connect(authToken);
   }
 
   /**
    * Stop the client connection to the server.
    */
   stop(): void {
-    this.#client.disconnect();
+    this.client.disconnect();
   }
 
   /**
@@ -158,22 +158,22 @@ export class InLiveClient {
     entryType: string,
     id: string,
   ) {
-    this.#client.join(`${entryType}:${id}`);
+    this.client.join(`${entryType}:${id}`);
   }
 
   #joinEntryTypeRoom(entryType: string) {
-    this.#client.join(entryType);
+    this.client.join(entryType);
   }
 
   #leaveEntryRoom(
     entryType: string,
     id: string,
   ) {
-    this.#client.leave(`${entryType}:${id}`);
+    this.client.leave(`${entryType}:${id}`);
   }
 
   #leaveEntryTypeRoom(entryType: string) {
-    this.#client.leave(entryType);
+    this.client.leave(entryType);
   }
 
   #ensureEntryType(entryType: string) {
@@ -203,7 +203,7 @@ export class InLiveClient {
   }
 
   #setupListeners() {
-    this.#client.onMessage((room, event, data) => {
+    this.client.onMessage((room, event, data) => {
       const [entryType, id] = room.split(":");
       if (id) {
         this.#handleEntryEvent(entryType, id, event, data);
@@ -212,7 +212,7 @@ export class InLiveClient {
       }
     });
 
-    this.#client.onStatusChange((status) => {
+    this.client.onStatusChange((status) => {
       for (const listener of this.#statusCallbacks.values()) {
         listener(status);
       }
