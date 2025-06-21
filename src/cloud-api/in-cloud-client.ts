@@ -36,13 +36,21 @@ export class InCloudClient {
         break;
     }
   };
+  #redirect: (url: string, response: Response) => void = (url, response) => {
+    if (typeof globalThis.location !== "undefined") {
+      globalThis.location.href = url;
+    }
+  };
 
   constructor(
     host?: string,
-    onNotify?: (info: NotificationInfo) => Promise<void> | void,
+    options?: {
+      onNotify?: (info: NotificationInfo) => Promise<void> | void;
+      onRedirec?: (url: string, response: Response) => void;
+    },
   ) {
     this.host = host || "/api";
-
+    const { onNotify, onRedirec } = options || {};
     this.headers = new Headers();
     this.headers.append("Content-Type", "application/json");
     this.entry = new EntryGroup(this.call.bind(this));
@@ -100,7 +108,11 @@ export class InCloudClient {
     });
     if (!response.ok) {
       if (response.status === 302) {
-        globalThis.location.href = response.headers.get("Location") || "/";
+        const location = response.headers.get("Location");
+        if (location) {
+          this.#redirect(location, response);
+          return {} as T;
+        }
       }
 
       const content = await response.text();
