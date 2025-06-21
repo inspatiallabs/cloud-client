@@ -98,6 +98,7 @@ export class InCloudClient {
     const url = `${this.host}?group=${group as string}&action=${action}`;
     const response = await fetch(url, {
       method,
+
       credentials: "include",
       headers: this.headers,
       body: JSON.stringify(data),
