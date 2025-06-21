@@ -46,11 +46,11 @@ export class InCloudClient {
     host?: string,
     options?: {
       onNotify?: (info: NotificationInfo) => Promise<void> | void;
-      onRedirec?: (url: string, response: Response) => void;
+      onRedirect?: (url: string, response: Response) => void;
     },
   ) {
     this.host = host || "/api";
-    const { onNotify, onRedirec } = options || {};
+    const { onNotify, onRedirect } = options || {};
     this.headers = new Headers();
     this.headers.append("Content-Type", "application/json");
     this.entry = new EntryGroup(this.call.bind(this));
@@ -59,6 +59,9 @@ export class InCloudClient {
     this.orm = new ORMGroup(this.call.bind(this));
     if (onNotify) {
       this.#notify = onNotify;
+    }
+    if (onRedirect) {
+      this.#redirect = onRedirect;
     }
   }
 
