@@ -47,4 +47,27 @@ export class AuthGroup {
       globalThis.location.href = response.redirect;
     }
   }
+  async signupWithGoogle(options?: {
+    redirectTo?: string;
+    csrfToken?: string;
+  }): Promise<void> {
+    const { redirectTo, csrfToken } = options || {};
+    const redirect = redirectTo || globalThis.location.href;
+    const csrf = csrfToken || localStorage.getItem("csrfToken");
+    if (csrf) {
+      localStorage.setItem("csrfToken", csrf);
+    }
+
+    const response = await this.#call<{ redirect: string }>(
+      "auth",
+      "signupWithGoogle",
+      {
+        redirectTo: redirect,
+        csrfToken: csrf,
+      },
+    );
+    if (response.redirect) {
+      globalThis.location.href = response.redirect;
+    }
+  }
 }
