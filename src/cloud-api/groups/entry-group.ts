@@ -70,12 +70,14 @@ export class EntryGroup {
     id: string,
     action: string,
     data?: Record<string, InValue>,
+    enqueue: boolean = false,
   ): Promise<void | unknown> {
     return await this.#call("entry", "runEntryAction", {
       entryType,
       id,
       action,
       data,
+      enqueue,
     });
   }
 }

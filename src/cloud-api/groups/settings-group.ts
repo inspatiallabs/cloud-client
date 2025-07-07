@@ -43,12 +43,14 @@ export class SettingsGroup {
   async runSettingsAction<T, R>(
     settingsType: string,
     action: string,
-    params: T,
+    data: T,
+    enqueue: boolean = false,
   ): Promise<R> {
     return await this.#call<R>("settings", "runSettingsAction", {
       settingsType,
       action,
-      params,
+      data,
+      enqueue,
     });
   }
 }

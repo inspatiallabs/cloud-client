@@ -5,6 +5,7 @@ export interface BaseType {
   name: string;
   description: string;
   extension?: string;
+  systemGlobal: boolean;
   label: string;
   fields: Array<InField>;
   titleFields: Array<InField>;
