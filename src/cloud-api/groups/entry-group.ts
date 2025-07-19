@@ -62,32 +62,31 @@ export class EntryGroup {
     });
   }
   sum<F extends string>(entryType: string, options: {
-    fields: F[],
-    filter?: DBFilter,
-    orFilter?: DBFilter,
-  }): Promise<Record<F, number>>
+    fields: F[];
+    filter?: DBFilter;
+    orFilter?: DBFilter;
+  }): Promise<Record<F, number>>;
   sum<F extends string, G extends string>(entryType: string, options: {
-    fields: F[],
-    filter?: DBFilter,
-    orFilter?: DBFilter,
-    groupBy: G[],
-  }): Promise<Array<Record<F, number> & Record<G, string>>>
+    fields: F[];
+    filter?: DBFilter;
+    orFilter?: DBFilter;
+    groupBy: G[];
+  }): Promise<Array<Record<F, number> & Record<G, string>>>;
   async sum(entryType: string, options: {
-    fields: string[],
-    filter?: DBFilter,
-    orFilter?: DBFilter,
-    groupBy?: string[],
+    fields: string[];
+    filter?: DBFilter;
+    orFilter?: DBFilter;
+    groupBy?: string[];
   }) {
     return await this.#call("entry", "sum", {
       entryType,
       ...options,
-    }
-    );
+    });
   }
   async count(entryType: string, options?: {
     filter?: DBFilter;
     orFilter?: DBFilter;
-  }): Promise<number>;
+  }): Promise<{ count: number }>;
   async count<F extends string>(
     entryType: string,
     options: {
@@ -109,7 +108,6 @@ export class EntryGroup {
       ...options,
     });
   }
-
 
   async deleteEntry(entryType: string, id: IDValue): Promise<void> {
     return await this.#call<void>("entry", "deleteEntry", { entryType, id });

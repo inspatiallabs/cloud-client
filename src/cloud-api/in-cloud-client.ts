@@ -47,7 +47,7 @@ export class InCloudClient {
         break;
     }
   };
-  #redirect: (url: string, response: Response) => void = (url, response) => {
+  #redirect: (url: string, response: Response) => void = (url) => {
     if (typeof globalThis.location !== "undefined") {
       globalThis.location.href = url;
     }
