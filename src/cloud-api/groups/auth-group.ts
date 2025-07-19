@@ -1,4 +1,4 @@
-import type { SessionData } from "#/types/mod.ts";
+import type { SessionData } from "../../types/mod.ts";
 import type { ServerCall } from "../api-client-types.ts";
 
 export class AuthGroup {
@@ -23,7 +23,14 @@ export class AuthGroup {
     }
     return response;
   }
-
+  async registerAccount(info: {
+    email: string,
+    password: string,
+    firstName: string;
+    lastName: string;
+  }): Promise<SessionData> {
+    return await this.#call<SessionData>("auth", "registerAccount", info);
+  }
   async signInWithGoogle(options?: {
     redirectTo?: string;
     csrfToken?: string;

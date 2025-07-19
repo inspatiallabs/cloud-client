@@ -1,5 +1,5 @@
-import type { BaseType, BaseTypeConfig } from "#/types/shared-types.ts";
-import type { Entry } from "#/types/entry-types.ts";
+import type { BaseType, BaseTypeConfig } from "./shared-types.ts";
+import type { Entry } from "./entry-types.ts";
 
 export interface ChildEntryConfig extends BaseTypeConfig {
   tableName?: string;

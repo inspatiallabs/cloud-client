@@ -1,4 +1,4 @@
-import type { InValue } from "#/types/field-types.ts";
+import type { InValue } from "../types/field-types.ts";
 
 export interface ErrorInfo {
   statusCode: number;

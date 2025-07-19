@@ -2,16 +2,20 @@ import type {
   EntryCallbackMap,
   EntryEvent,
   EntryListener,
-  EntryTypeEvent,
+  EntryTypeEventMap,
   EntryTypeListener,
+  EventNameMap,
+  SettingsEventMap,
+  SettingsListener,
   SocketStatus,
 } from "./in-live-types.ts";
 import { InLiveClientBase } from "./in-live-base.ts";
-import type { Entry } from "#/types/entry-types.ts";
+import type { Entry } from "../types/entry-types.ts";
 
 export class InLiveClient {
   client: InLiveClientBase;
   #callbacks: EntryCallbackMap = new Map();
+  #settingsCallbacks: Map<string, Map<string, SettingsListener>> = new Map();
   #statusCallbacks: Map<
     string,
     (status: SocketStatus) => Promise<void> | void
@@ -62,6 +66,10 @@ export class InLiveClient {
     this.#joinEntryRoom(entryType, id);
   }
 
+  // onSettings<S extends Settings = Settings>(
+  //   settings: string,
+  //   listener: EntryListener<Entry, EntryEvent<Entry>>,
+  // ) {}
   /**
    * Remove a listener for a specific entry by `EntyType` and `id`.
    * If this is the last listener for the entry, the client will leave the server room for the entry.
@@ -82,6 +90,21 @@ export class InLiveClient {
     }
   }
 
+  removeSettingsListener(
+    settings: string,
+    listenerName: string,
+  ): void {
+    const listenerMap = this.#ensureSettings(settings);
+    if (!listenerMap.has(listenerName)) {
+      throw new Error(`Listener with name ${listenerName} does not exist`);
+    }
+    listenerMap.delete(listenerName);
+
+    if (listenerMap.size === 0) {
+      this.leaveSettings(settings);
+    }
+  }
+
   /**
    * Clear all listeners for a specific entry by `EntyType` and `id`.
    * This will also leave the server room for the entry, so no more events will be sent
@@ -92,17 +115,24 @@ export class InLiveClient {
     this.#clearEntry(entryType, id);
   }
 
+  leaveSettings(settings: string) {
+    this.#leaveSettingsRoom(settings);
+    this.#clearSettings(settings)
+  }
+
   /**
    * Add a listener for a specific entry type event.
    * If this is the first listener for the entry type, the client will join the server room for the entry type.
    */
-  onEntryType<T, E extends EntryTypeEvent<T> = EntryTypeEvent<T>>(
+  onEntryType<T extends Record<string, any>
+  >(
     entryType: string,
-    listener: EntryTypeListener<T, E>,
+    listener: EntryTypeListener<T>,
   ): void {
     const listenerMap = this.#ensureEntryType(entryType);
     if (listenerMap.listeners.has(listener.name)) {
-      throw new Error(`Listener with name ${listener.name} already exists`);
+      console.warn(`Listener with name ${listener.name} already exists`);
+      return
     }
     listenerMap.listeners.set(listener.name, listener);
 
@@ -120,6 +150,22 @@ export class InLiveClient {
     if (listenerMap.listeners.size === 0) {
       this.leaveEntryType(entryType);
     }
+  }
+
+  /**
+   *
+   */
+  onSettings<L extends SettingsListener>(
+    settings: string,
+    listener: L
+  ): void {
+    const listenerMap = this.#ensureSettings(settings);
+    if (listenerMap.has(listener.name)) {
+      throw new Error(`Listener with name ${listener.name} already exists`);
+    }
+    listenerMap.set(listener.name, listener);
+
+    this.#joinSettingsRoom(settings);
   }
 
   /**
@@ -172,10 +218,22 @@ export class InLiveClient {
     this.client.leave(`${entryType}:${id}`);
   }
 
+  #joinSettingsRoom(settings: string) {
+    this.client.join(`settings:${settings}`);
+  }
+  #leaveSettingsRoom(settings: string) {
+    this.client.leave(`settings:${settings}`);
+  }
   #leaveEntryTypeRoom(entryType: string) {
     this.client.leave(entryType);
   }
-
+  #ensureSettings(settings: string) {
+    if (!this.#settingsCallbacks.has(settings)) {
+      this.#settingsCallbacks.set(settings, new Map());
+    }
+    const listenerMap = this.#settingsCallbacks.get(settings)!;
+    return listenerMap;
+  }
   #ensureEntryType(entryType: string) {
     if (!this.#callbacks.has(entryType)) {
       this.#callbacks.set(entryType, {
@@ -201,14 +259,22 @@ export class InLiveClient {
     const listenerMap = this.#ensureEntryType(entryType);
     listenerMap.entries.delete(id);
   }
+  #clearSettings(settings: string) {
+    const listenerMap = this.#ensureSettings(settings);
+    listenerMap.clear();
+    this.#settingsCallbacks.delete(settings);
+  }
 
   #setupListeners() {
     this.client.onMessage((room, event, data) => {
-      const [entryType, id] = room.split(":");
+      const [prefix, id] = room.split(":");
+      if (prefix === "settings") {
+        return this.#handleSettingsEvent(prefix, event, data);
+      }
       if (id) {
-        this.#handleEntryEvent(entryType, id, event, data);
+        this.#handleEntryEvent(prefix, id, event, data);
       } else {
-        this.#handleEntryTypeEvent(entryType, event, data);
+        this.#handleEntryTypeEvent(prefix, event, data);
       }
     });
 
@@ -217,6 +283,20 @@ export class InLiveClient {
         listener(status);
       }
     });
+  }
+  #handleSettingsEvent(
+    settings: string,
+    event: string,
+    data: Record<string, unknown>,
+  ) {
+    const listenerMap = this.#ensureSettings(settings);
+    if (listenerMap.size === 0) {
+      this.leaveSettings(settings);
+      return;
+    }
+    for (const listener of listenerMap.values()) {
+      listener.callback(event as keyof SettingsEventMap, data);
+    }
   }
 
   #handleEntryEvent(
@@ -246,7 +326,7 @@ export class InLiveClient {
       return;
     }
     for (const listener of listenerMap.listeners.values()) {
-      listener.callback(event as EntryTypeEvent, data);
+      listener.callback(event as any, data);
     }
   }
 }

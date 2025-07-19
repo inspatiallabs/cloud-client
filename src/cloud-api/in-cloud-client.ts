@@ -1,5 +1,5 @@
-import type { CloudAPIDocs } from "#/types/docs-types.ts";
-import type { Entry } from "#/types/entry-types.ts";
+import type { CloudAPIDocs } from "../types/docs-types.ts";
+import type { Entry } from "../types/entry-types.ts";
 import type { ErrorInfo, NotificationInfo } from "./api-client-types.ts";
 import { AuthGroup } from "./groups/auth-group.ts";
 import { EntryGroup } from "./groups/entry-group.ts";
@@ -7,7 +7,18 @@ import { ORMGroup } from "./groups/orm-group.ts";
 import { SettingsGroup } from "./groups/settings-group.ts";
 
 export class InCloudClient {
-  host: string;
+  #host: string;
+  #filesEndpoint: string;
+  get host() {
+    return this.#host;
+  }
+  set host(value: string) {
+    this.#host = value;
+    this.#filesEndpoint = `${value}?group=files&action=getFile&fileId=`
+  }
+  get filesEndpoint(): string {
+    return this.#filesEndpoint;
+  }
   headers: Headers;
   /**
    * Entry group of the API.
@@ -49,7 +60,8 @@ export class InCloudClient {
       onRedirect?: (url: string, response: Response) => void;
     },
   ) {
-    this.host = host || "/api";
+    this.#host = host || "/api";
+    this.#filesEndpoint = `${host}?group=files&action=getFile&fileId=`;
     const { onNotify, onRedirect } = options || {};
     this.headers = new Headers();
     this.headers.append("Content-Type", "application/json");
@@ -110,6 +122,9 @@ export class InCloudClient {
       });
       return new Response(null, { status: 500 });
     });
+    return await this.#handleResponse<T>(response, group, action);
+  }
+  async #handleResponse<T>(response: Response, group: string, action: string) {
     if (!response.ok) {
       if (response.status === 302) {
         const location = response.headers.get("Location");
@@ -148,6 +163,7 @@ export class InCloudClient {
       } as T;
     }
   }
+
   uploadFile(options: {
     fileName: string;
     file: File;
@@ -171,13 +187,13 @@ export class InCloudClient {
     // upload progress event
     if (typeof options.progressCallback == "function") {
       const progressCallback = options.progressCallback;
-      request.upload.addEventListener("progress", function (e: ProgressEvent) {
+      request.upload.addEventListener("progress", function(e: ProgressEvent) {
         progressCallback(e);
       });
     }
 
     // request finished event
-    request.addEventListener("load", function () {
+    request.addEventListener("load", function() {
       if (request.status >= 200 && request.status < 300) {
         if (typeof options.completeCallback == "function") {
           options.completeCallback(JSON.parse(request.responseText).file);

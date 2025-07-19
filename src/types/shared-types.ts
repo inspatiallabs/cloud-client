@@ -1,5 +1,5 @@
-import type { InField } from "#/types/field-types.ts";
-import type { ChildEntryType } from "#/types/child-types.ts";
+import type { InField } from "./field-types.ts";
+import type { ChildEntryType } from "./child-types.ts";
 
 export interface BaseType {
   name: string;

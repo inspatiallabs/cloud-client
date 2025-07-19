@@ -1,7 +1,7 @@
 import type {
   Settings,
   SettingsWithTimestamp,
-} from "#/types/settings-types.ts";
+} from "../../types/settings-types.ts";
 import type { ServerCall } from "../api-client-types.ts";
 
 export class SettingsGroup {

@@ -1,7 +1,7 @@
 import extensions from "./extensions.json" with { type: "json" };
 import categories from "./categories.json" with { type: "json" };
 import mimetypes from "./mimetypes.json" with { type: "json" };
-import type { MimeTypeCategory } from "#/mime-types/file-types.ts";
+import type { MimeTypeCategory } from "../mime-types/file-types.ts";
 
 export interface ExtensionInfo {
   extension: string;

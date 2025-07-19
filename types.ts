@@ -2,29 +2,32 @@ export type {
   ChildEntry,
   ChildEntryConfig,
   ChildEntryType as ChildEntryTypeInfo,
-} from "#/types/child-types.ts";
+} from "./src/types/child-types.ts";
 export type {
   CloudAPIActionDocs,
   CloudAPIDocs,
   CloudAPIGroupDocs,
-} from "#/types/docs-types.ts";
-export type { FieldGroup } from "#/types/shared-types.ts";
+} from "./src/types/docs-types.ts";
+export type { FieldGroup } from "./src/types/shared-types.ts";
 export type {
   Entry,
   EntryAction,
   EntryType,
   EntryTypeConfig,
-} from "#/types/entry-types.ts";
+} from "./src/types/entry-types.ts";
 export type {
   Choice,
   FetchOptions,
   IDMode,
   InField,
+  InFieldWithKey,
   InFieldMap,
   InFieldType,
   IntFormat,
   InValue,
-} from "#/types/field-types.ts";
+  Currency,
+  CurrencyCode
+} from "./src/types/field-types.ts";
 export type {
   ApplicationFileType,
   ArchiveFileType,
@@ -38,16 +41,16 @@ export type {
   MimeTypeCategory,
   TextFileType,
   VideoFileType,
-} from "#/types/file-types.ts";
+} from "./src/types/file-types.ts";
 
-export type { IDValue, SessionData } from "#/types/mod.ts";
+export type { IDValue, SessionData } from "./src/types/mod.ts";
 
 export type {
   Settings,
   SettingsType,
   SettingsTypeConfig,
   SettingsWithTimestamp,
-} from "#/types/settings-types.ts";
+} from "./src/types/settings-types.ts";
 export type {
   DBFilter,
   ErrorInfo,
@@ -58,9 +61,10 @@ export type {
   ListOptions,
   ListResponse,
   NotificationInfo,
-} from "#/cloud-api/api-client-types.ts";
+} from "./src/cloud-api/api-client-types.ts";
 
 export type {
+  EntryCallbackMap as EntyCallbackMap,
   EntryEvent,
   EntryEventDelete,
   EntryEventJoin,
@@ -68,12 +72,12 @@ export type {
   EntryEventMap,
   EntryEventUpdate,
   EntryListener,
-  EntryTypeEvent,
   EntryTypeEventCreate,
   EntryTypeEventDelete,
   EntryTypeEventMap,
   EntryTypeEventUpdate,
   EntryTypeListener,
-  EntryCallbackMap as EntyCallbackMap,
   SocketStatus,
-} from "#/in-live/in-live-types.ts";
+  SettingsListener,
+  SettingsEventMap
+} from "./src/in-live/in-live-types.ts";

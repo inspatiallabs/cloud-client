@@ -1,4 +1,4 @@
-import type { InField } from "#/types/field-types.ts";
+import type { InField } from "./field-types.ts";
 
 /**
  * The full documentation for an ActionsAPI instance in JSON format.

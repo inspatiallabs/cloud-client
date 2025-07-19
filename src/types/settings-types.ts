@@ -1,8 +1,8 @@
-import type { InValue } from "#/types/field-types.ts";
-import type { BaseType, BaseTypeConfig } from "#/types/shared-types.ts";
+import type { InValue } from "./field-types.ts";
+import type { BaseType, BaseTypeConfig } from "./shared-types.ts";
 
 export interface Settings {
-  [key: string]: InValue;
+  [key: string]: any;
 }
 
 export interface SettingsWithTimestamp<S extends Settings = Settings> {
