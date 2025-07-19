@@ -5,7 +5,10 @@ export type InField<T extends InFieldType = InFieldType> = InFieldMap[T];
 export type InValue<T extends keyof InValueTypeMap = keyof InValueTypeMap> =
   InValueTypeMap[T];
 
-export type InFieldWithKey<K extends PropertyKey, T extends InFieldType = InFieldType> = Omit<InFieldMap[T], "key"> & {
+export type InFieldWithKey<
+  K extends PropertyKey,
+  T extends InFieldType = InFieldType,
+> = Omit<InFieldMap[T], "key"> & {
   key: K extends string ? K : never;
 };
 
@@ -202,7 +205,14 @@ export interface CurrencyField extends BaseField {
   currencyCode?: CurrencyCode;
   currency?: Currency;
 }
-export type CurrencyCode = keyof typeof Currencies;
+export type CurrencyCode =
+  | "USD"
+  | "EUR"
+  | "GBP"
+  | "JPY"
+  | "AUD"
+  | "CAD"
+  | "ILS";
 export interface Currency {
   code: string;
   symbol: string;
@@ -213,7 +223,7 @@ export interface Currency {
   decimalPlaces?: number;
 }
 
-export const Currencies = {
+export const Currencies: Record<CurrencyCode, Currency> = {
   USD: {
     code: "USD",
     symbol: "$",
@@ -277,9 +287,7 @@ export const Currencies = {
     thousandsSeparator: ",",
     decimalPlaces: 2,
   },
-  // Add more currencies as needed
-} as const satisfies Record<string, Currency>;
-
+};
 
 export interface Choice {
   key: string;

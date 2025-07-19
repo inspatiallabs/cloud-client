@@ -9,12 +9,12 @@ import { SettingsGroup } from "./groups/settings-group.ts";
 export class InCloudClient {
   #host: string;
   #filesEndpoint: string;
-  get host() {
+  get host(): string {
     return this.#host;
   }
   set host(value: string) {
     this.#host = value;
-    this.#filesEndpoint = `${value}?group=files&action=getFile&fileId=`
+    this.#filesEndpoint = `${value}?group=files&action=getFile&fileId=`;
   }
   get filesEndpoint(): string {
     return this.#filesEndpoint;
@@ -187,13 +187,13 @@ export class InCloudClient {
     // upload progress event
     if (typeof options.progressCallback == "function") {
       const progressCallback = options.progressCallback;
-      request.upload.addEventListener("progress", function(e: ProgressEvent) {
+      request.upload.addEventListener("progress", function (e: ProgressEvent) {
         progressCallback(e);
       });
     }
 
     // request finished event
-    request.addEventListener("load", function() {
+    request.addEventListener("load", function () {
       if (request.status >= 200 && request.status < 300) {
         if (typeof options.completeCallback == "function") {
           options.completeCallback(JSON.parse(request.responseText).file);
