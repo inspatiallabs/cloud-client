@@ -167,6 +167,7 @@ export class InCloudClient {
   uploadFile(options: {
     fileName: string;
     file: File;
+    global?: boolean;
     progressCallback?: (progress: ProgressEvent, uid?: string) => void;
     completeCallback?: (file: Entry) => void;
     errorCallback?: (response: unknown, uid?: string) => void;
@@ -179,9 +180,12 @@ export class InCloudClient {
     data.append("fileName", options.fileName);
     const request = new XMLHttpRequest();
     request.withCredentials = true;
+
     request.open(
       "POST",
-      `${this.host}?group=files&action=upload`,
+      `${this.host}?group=files&action=upload${
+        options.global ? "&global=true" : ""
+      }`,
     );
 
     // upload progress event
