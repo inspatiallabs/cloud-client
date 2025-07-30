@@ -2,6 +2,7 @@ import type { InValue } from "../../types/field-types.ts";
 import type { Entry } from "../../types/entry-types.ts";
 import type {
   DBFilter,
+  EntryConnectionInfo,
   GetListResponse,
   ListOptions,
   ServerCall,
@@ -50,6 +51,19 @@ export class EntryGroup {
     });
   }
 
+  async countConnections(
+    entryType: string,
+    id: string | number,
+  ): Promise<Array<EntryConnectionInfo>> {
+    return await this.#call<Array<EntryConnectionInfo>>(
+      "entry",
+      "countConnections",
+      {
+        entryType,
+        id,
+      },
+    );
+  }
   async updateEntry<T = Record<string, InValue>>(
     entryType: string,
     id: IDValue,

@@ -18,7 +18,13 @@ export interface NotificationInfo {
   message: string;
   type: "success" | "error" | "warning" | "info";
 }
-
+export interface EntryConnectionInfo {
+  entryType: string;
+  label: string;
+  fieldKey: string;
+  fieldLabel: string;
+  count: number;
+}
 export interface ListResponse<T = Record<string, InValue>> {
   columns: Array<string>;
   rowCount: number;

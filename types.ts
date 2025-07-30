@@ -12,21 +12,22 @@ export type { FieldGroup } from "./src/types/shared-types.ts";
 export type {
   Entry,
   EntryAction,
+  EntryConnection,
   EntryType,
   EntryTypeConfig,
 } from "./src/types/entry-types.ts";
 export type {
   Choice,
+  Currency,
+  CurrencyCode,
   FetchOptions,
   IDMode,
   InField,
-  InFieldWithKey,
   InFieldMap,
   InFieldType,
+  InFieldWithKey,
   IntFormat,
   InValue,
-  Currency,
-  CurrencyCode
 } from "./src/types/field-types.ts";
 export type {
   ApplicationFileType,
@@ -53,6 +54,7 @@ export type {
 } from "./src/types/settings-types.ts";
 export type {
   DBFilter,
+  EntryConnectionInfo,
   ErrorInfo,
   FilterAll,
   FilterOps,
@@ -77,7 +79,7 @@ export type {
   EntryTypeEventMap,
   EntryTypeEventUpdate,
   EntryTypeListener,
-  SocketStatus,
+  SettingsEventMap,
   SettingsListener,
-  SettingsEventMap
+  SocketStatus,
 } from "./src/in-live/in-live-types.ts";

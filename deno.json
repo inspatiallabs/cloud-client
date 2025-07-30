@@ -1,6 +1,6 @@
 {
   "name": "@inspatial/cloud-client",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "license": "Apache-2.0",
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"]

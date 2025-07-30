@@ -8,6 +8,13 @@ export interface EntryAction {
   description?: string;
   params: Array<InField>;
 }
+export interface EntryConnection {
+  referencingEntry: string;
+  referencingEntryLabel: string;
+  referencingField: string;
+  referencingFieldLabel: string;
+  listFields: Array<InField>;
+}
 
 export interface EntryTypeConfig extends BaseTypeConfig {
   tableName: string;
@@ -23,6 +30,7 @@ export interface EntryType extends BaseType {
   defaultListFields: Array<InField>;
   statusField?: InField<"ChoicesField">;
   imageField?: InField<"ImageField">;
+  connections: Array<EntryConnection>;
 }
 
 export interface Entry {

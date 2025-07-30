@@ -67,6 +67,7 @@ type BaseField = {
 export interface IDField extends BaseField {
   type: "IDField";
   idMode: IDMode;
+  entryType: string;
 }
 
 export interface DataField extends BaseField {
