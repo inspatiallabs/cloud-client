@@ -302,6 +302,7 @@ export interface Choice {
   key: string;
   label: string;
   color?: string;
+  description?: string;
 }
 
 type InValueTypeMap = {
