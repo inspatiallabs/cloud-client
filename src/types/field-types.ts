@@ -1,3 +1,4 @@
+import { InFilter } from "../cloud-api/api-client-types.ts";
 import type { FileTypes, ImageFileType } from "./file-types.ts";
 
 export type InFieldType = keyof InFieldMap;
@@ -182,6 +183,7 @@ export interface ConnectionField extends BaseField {
   entryType: string;
 
   connectionIdMode?: IDMode;
+  filter?: InFilter | Array<InFilter>;
   /**
    * filter the search results by matching the given key-value pairs.
    * The key is referencing a field in the connected entry type.
