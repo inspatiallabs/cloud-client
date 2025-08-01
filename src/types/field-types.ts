@@ -182,6 +182,12 @@ export interface ConnectionField extends BaseField {
   entryType: string;
 
   connectionIdMode?: IDMode;
+  /**
+   * filter the search results by matching the given key-value pairs.
+   * The key is referencing a field in the connected entry type.
+   * The value is the key of a field in this entry to pull the value from.
+   */
+  filterBy?: Record<string, string>;
 }
 
 export interface RichTextField extends BaseField {
