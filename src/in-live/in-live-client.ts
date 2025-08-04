@@ -201,18 +201,19 @@ export class InLiveClient {
     entryType: string,
     id: string,
   ) {
-    this.client.join(`${entryType}:${id}`);
+    this.client.join(`entry:${entryType}:${id}`);
   }
-
-  #joinEntryTypeRoom(entryType: string) {
-    this.client.join(entryType);
-  }
-
   #leaveEntryRoom(
     entryType: string,
     id: string,
   ) {
-    this.client.leave(`${entryType}:${id}`);
+    this.client.leave(`entry:${entryType}:${id}`);
+  }
+  #joinEntryTypeRoom(entryType: string) {
+    this.client.join(`entryType:${entryType}`);
+  }
+  #leaveEntryTypeRoom(entryType: string) {
+    this.client.leave(`entryType:${entryType}`);
   }
 
   #joinSettingsRoom(settings: string) {
@@ -221,9 +222,7 @@ export class InLiveClient {
   #leaveSettingsRoom(settings: string) {
     this.client.leave(`settings:${settings}`);
   }
-  #leaveEntryTypeRoom(entryType: string) {
-    this.client.leave(entryType);
-  }
+
   #ensureSettings(settings: string) {
     if (!this.#settingsCallbacks.has(settings)) {
       this.#settingsCallbacks.set(settings, new Map());
@@ -264,14 +263,16 @@ export class InLiveClient {
 
   #setupListeners() {
     this.client.onMessage((room, event, data) => {
-      const [prefix, id] = room.split(":");
-      if (prefix === "settings") {
-        return this.#handleSettingsEvent(id, event, data);
-      }
-      if (id) {
-        this.#handleEntryEvent(prefix, id, event, data);
-      } else {
-        this.#handleEntryTypeEvent(prefix, event, data);
+      const [prefix, name, id] = room.split(":");
+      switch (prefix) {
+        case "settings":
+          return this.#handleSettingsEvent(name, event, data);
+        case "entry":
+          return this.#handleEntryEvent(name, id, event, data);
+        case "entryType":
+          return this.#handleEntryTypeEvent(name, event, data);
+        case "everyone":
+          return; // This is a broadcast message, no need to handle it here
       }
     });
 
