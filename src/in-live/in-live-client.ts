@@ -117,22 +117,21 @@ export class InLiveClient {
 
   leaveSettings(settings: string) {
     this.#leaveSettingsRoom(settings);
-    this.#clearSettings(settings)
+    this.#clearSettings(settings);
   }
 
   /**
    * Add a listener for a specific entry type event.
    * If this is the first listener for the entry type, the client will join the server room for the entry type.
    */
-  onEntryType<T extends Record<string, any>
-  >(
+  onEntryType<T extends Record<string, any>>(
     entryType: string,
     listener: EntryTypeListener<T>,
   ): void {
     const listenerMap = this.#ensureEntryType(entryType);
     if (listenerMap.listeners.has(listener.name)) {
       console.warn(`Listener with name ${listener.name} already exists`);
-      return
+      return;
     }
     listenerMap.listeners.set(listener.name, listener);
 
@@ -152,12 +151,10 @@ export class InLiveClient {
     }
   }
 
-  /**
-   *
-   */
+  /** */
   onSettings<L extends SettingsListener>(
     settings: string,
-    listener: L
+    listener: L,
   ): void {
     const listenerMap = this.#ensureSettings(settings);
     if (listenerMap.has(listener.name)) {
@@ -269,7 +266,7 @@ export class InLiveClient {
     this.client.onMessage((room, event, data) => {
       const [prefix, id] = room.split(":");
       if (prefix === "settings") {
-        return this.#handleSettingsEvent(prefix, event, data);
+        return this.#handleSettingsEvent(id, event, data);
       }
       if (id) {
         this.#handleEntryEvent(prefix, id, event, data);
