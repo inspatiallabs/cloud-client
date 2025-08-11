@@ -61,7 +61,7 @@ export class InCloudClient {
     },
   ) {
     this.#host = host || "/api";
-    this.#filesEndpoint = `${host}?group=files&action=getFile&fileId=`;
+    this.#filesEndpoint = `${this.#host}?group=files&action=getFile&fileId=`;
     const { onNotify, onRedirect } = options || {};
     this.headers = new Headers();
     this.headers.append("Content-Type", "application/json");
