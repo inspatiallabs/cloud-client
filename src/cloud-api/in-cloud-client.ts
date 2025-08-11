@@ -168,6 +168,7 @@ export class InCloudClient {
     fileName: string;
     file: File;
     global?: boolean;
+    publicFile?: boolean;
     progressCallback?: (progress: ProgressEvent, uid?: string) => void;
     completeCallback?: (file: Entry) => void;
     errorCallback?: (response: unknown, uid?: string) => void;
@@ -185,7 +186,7 @@ export class InCloudClient {
       "POST",
       `${this.host}?group=files&action=upload${
         options.global ? "&global=true" : ""
-      }`,
+      }${options.publicFile ? "&publicFile=true" : ""}`,
     );
 
     // upload progress event
