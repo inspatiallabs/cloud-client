@@ -185,34 +185,35 @@ export class InCloudClient {
     data.append("fileName", options.fileName);
     const request = new XMLHttpRequest();
     request.withCredentials = true;
-    const url = new URL(this.host);
-    url.searchParams.set("group", "files");
-    url.searchParams.set("action", "upload");
+
+    const searchParams = new URLSearchParams(url.search);
+    searchParams.set("group", "files");
+    searchParams.set("action", "upload");
     if (options.global) {
-      url.searchParams.set("global", "true");
+      searchParams.set("global", "true");
     }
     if (options.publicFile) {
-      url.searchParams.set("publicFile", "true");
+      searchParams.set("publicFile", "true");
     }
     if (options.optimize) {
       if (options.optimize.width) {
-        url.searchParams.set(
+        searchParams.set(
           "optimizeWidth",
           options.optimize.width.toString(),
         );
       }
       if (options.optimize.height) {
-        url.searchParams.set(
+        searchParams.set(
           "optimizeHeight",
           options.optimize.height.toString(),
         );
       }
-      url.searchParams.set("optimizeImage", "true");
+      searchParams.set("optimizeImage", "true");
     }
-
+    const endpoint = `${this.host}?${searchParams.toString()}`;
     request.open(
       "POST",
-      url.toString(),
+      endpoint,
     );
 
     // upload progress event
