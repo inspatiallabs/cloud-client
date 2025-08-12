@@ -186,7 +186,7 @@ export class InCloudClient {
     const request = new XMLHttpRequest();
     request.withCredentials = true;
 
-    const searchParams = new URLSearchParams(url.search);
+    const searchParams = new URLSearchParams();
     searchParams.set("group", "files");
     searchParams.set("action", "upload");
     if (options.global) {
