@@ -155,6 +155,10 @@ export interface ImageField extends BaseField {
   allowedImageTypes: Array<ImageFileType> | "all";
   entryType?: "cloudFile";
   connectionIdMode?: "ulid";
+  optimize?: {
+    width?: number;
+    height?: number;
+  };
   publicFile?: boolean;
 }
 

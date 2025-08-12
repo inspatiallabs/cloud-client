@@ -196,10 +196,16 @@ export class InCloudClient {
     }
     if (options.optimize) {
       if (options.optimize.width) {
-        data.append("optimizeWidth", options.optimize.width.toString());
+        url.searchParams.set(
+          "optimizeWidth",
+          options.optimize.width.toString(),
+        );
       }
       if (options.optimize.height) {
-        data.append("optimizeHeight", options.optimize.height.toString());
+        url.searchParams.set(
+          "optimizeHeight",
+          options.optimize.height.toString(),
+        );
       }
       url.searchParams.set("optimizeImage", "true");
     }
