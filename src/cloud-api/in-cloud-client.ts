@@ -169,6 +169,10 @@ export class InCloudClient {
     file: File;
     global?: boolean;
     publicFile?: boolean;
+    optimize?: {
+      width?: number;
+      height?: number;
+    };
     progressCallback?: (progress: ProgressEvent, uid?: string) => void;
     completeCallback?: (file: Entry) => void;
     errorCallback?: (response: unknown, uid?: string) => void;
@@ -181,12 +185,28 @@ export class InCloudClient {
     data.append("fileName", options.fileName);
     const request = new XMLHttpRequest();
     request.withCredentials = true;
+    const url = new URL(this.host);
+    url.searchParams.set("group", "files");
+    url.searchParams.set("action", "upload");
+    if (options.global) {
+      url.searchParams.set("global", "true");
+    }
+    if (options.publicFile) {
+      url.searchParams.set("publicFile", "true");
+    }
+    if (options.optimize) {
+      if (options.optimize.width) {
+        data.append("optimizeWidth", options.optimize.width.toString());
+      }
+      if (options.optimize.height) {
+        data.append("optimizeHeight", options.optimize.height.toString());
+      }
+      url.searchParams.set("optimizeImage", "true");
+    }
 
     request.open(
       "POST",
-      `${this.host}?group=files&action=upload${
-        options.global ? "&global=true" : ""
-      }${options.publicFile ? "&publicFile=true" : ""}`,
+      url.toString(),
     );
 
     // upload progress event
