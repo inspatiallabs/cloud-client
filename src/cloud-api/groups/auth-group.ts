@@ -24,12 +24,31 @@ export class AuthGroup {
     return response;
   }
   async registerAccount(info: {
-    email: string,
-    password: string,
+    email: string;
+    password: string;
     firstName: string;
     lastName: string;
   }): Promise<SessionData> {
     return await this.#call<SessionData>("auth", "registerAccount", info);
+  }
+  async resetPassword(
+    email: string,
+  ): Promise<
+    {
+      status: number;
+      type: "success" | "error";
+      title: string;
+      error: boolean;
+      message: string;
+    }
+  > {
+    return await this.#call("auth", "resetPassword", { email });
+  }
+  async setNewPassword(args: {
+    token: string;
+    password: string;
+  }) {
+    return await this.#call<void>("auth", "setNewPassword", args);
   }
   async signInWithGoogle(options?: {
     redirectTo?: string;
