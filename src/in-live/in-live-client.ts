@@ -197,6 +197,13 @@ export class InLiveClient {
     this.#statusCallbacks.delete(id);
   }
 
+  joinRoom(room: string, global?: boolean) {
+    this.client.join(room, global);
+  }
+  leaveRoom(room: string, global?: boolean) {
+    this.client.leave(room, global);
+  }
+
   #joinEntryRoom(
     entryType: string,
     id: string,

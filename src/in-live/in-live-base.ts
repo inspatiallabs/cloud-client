@@ -191,22 +191,22 @@ export class InLiveClientBase {
   /**
    * Join a room.
    */
-  join(roomName: string): void {
+  join(roomName: string, global?: boolean): void {
     if (this.#rooms.has(roomName)) {
       return;
     }
     this.#rooms.add(roomName);
-    this.#send({ type: "join", roomName });
+    this.#send({ type: "join", roomName, global });
   }
 
   /**
    * Leave a room.
    */
-  leave(roomName: string): void {
+  leave(roomName: string, global?: boolean): void {
     if (!this.#rooms.has(roomName)) {
       return;
     }
-    this.#send({ type: "leave", roomName });
+    this.#send({ type: "leave", roomName, global });
     this.#rooms.delete(roomName);
   }
 
