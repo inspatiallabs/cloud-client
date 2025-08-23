@@ -47,8 +47,10 @@ export class AuthGroup {
   async setNewPassword(args: {
     token: string;
     password: string;
-  }) {
-    return await this.#call<void>("auth", "setNewPassword", args);
+  }): Promise<{
+    status: "success" | "error";
+  }> {
+    return await this.#call("auth", "setNewPassword", args);
   }
   async signInWithGoogle(options?: {
     redirectTo?: string;
