@@ -37,6 +37,6 @@ export interface Entry {
   id: IDValue;
   createdAt: number;
   updatedAt: number;
-
-  [key: string]: InValue;
+  in__tags?: number[];
+  [key: string]: InValue | undefined;
 }

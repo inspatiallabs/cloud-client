@@ -36,6 +36,9 @@ export type InFieldMap = {
   CurrencyField: CurrencyField;
   IDField: IDField;
   FileField: FileField;
+  TimeField: TimeField;
+  CodeField: CodeField;
+  ArrayField: ArrayField;
 };
 
 /**
@@ -208,12 +211,30 @@ export interface URLField extends BaseField {
   defaultValue?: InValue<"URLField">;
   urlType?: "button" | "link" | "text";
 }
+export interface TimeField extends BaseField {
+  type: "TimeField";
+  defaultValue?: InValue<"TimeField">;
+}
 
 export interface ListField extends BaseField {
   type: "ListField";
   defaultValue?: InValue<"ListField">;
 }
+export interface ArrayField extends BaseField {
+  type: "ArrayField";
+  arrayType: keyof Pick<InFieldMap, "IntField" | "DataField">;
+}
 
+export interface CodeField extends BaseField {
+  type: "CodeField";
+  /**
+   * The non-editable code that will be displayed in the UI before and/or after the code input.
+   */
+  wrapWithCode?: {
+    start?: string;
+    end?: string;
+  };
+}
 export interface CurrencyField extends BaseField {
   type: "CurrencyField";
   defaultValue?: InValue<"CurrencyField">;
@@ -329,14 +350,14 @@ type InValueTypeMap = {
   FileField: string;
   JSONField: Record<string, unknown>;
   PhoneField: string;
-  ConnectionField: {
-    id: string;
-    display: string;
-  };
+  ConnectionField: string;
   RichTextField: Record<string, unknown>;
   URLField: string;
   ListField: string[];
   CurrencyField: number;
+  TimeField: string;
+  CodeField: string;
+  ArrayField: number[] | string[];
 };
 
 export type IDMode = "uuid" | "ulid" | "auto";
