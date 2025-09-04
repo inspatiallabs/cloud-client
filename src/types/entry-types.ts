@@ -19,6 +19,7 @@ export interface EntryConnection {
 export interface EntryTypeConfig extends BaseTypeConfig {
   tableName: string;
   titleField?: string;
+  taggable?: boolean;
   idMode: IDMode;
   searchFields?: Array<string>;
   defaultListFields?: Array<string>;
