@@ -67,13 +67,16 @@ type BetweenOps = "between" | "notBetween";
 type EmptyOps = "isEmpty" | "isNotEmpty";
 type ListOps = "notInList" | "inList";
 type ContainsOps = "contains" | "notContains" | "startsWith" | "endsWith";
+
+type ArrayOps = "arrayContains" | "arrayNotContains" | "arrayContainsAny";
 export type FilterOps =
   | EqualsOp
   | ComparisonOp
   | BetweenOps
   | EmptyOps
   | ListOps
-  | ContainsOps;
+  | ContainsOps
+  | ArrayOps;
 
 type FilterInList = {
   op: ListOps;
@@ -97,6 +100,11 @@ type FilterCompare = {
   value: string | number;
 };
 
+type FilterArray = {
+  op: ArrayOps;
+  value: string | number | Array<string> | Array<number>;
+};
+
 type FilterContains = {
   op: ContainsOps;
   value: string;
@@ -108,7 +116,8 @@ export type FilterAll =
   | FilterBetween
   | FilterEmpty
   | FilterCompare
-  | FilterContains;
+  | FilterContains
+  | FilterArray;
 
 export type InFilter =
   | FilterAll
