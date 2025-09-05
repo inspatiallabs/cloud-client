@@ -32,6 +32,7 @@ export interface EntryType extends BaseType {
   statusField?: InField<"ChoicesField">;
   imageField?: InField<"ImageField">;
   connections: Array<EntryConnection>;
+  permission: Record<string, unknown>;
 }
 
 export interface Entry {

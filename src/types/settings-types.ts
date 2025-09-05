@@ -23,4 +23,5 @@ export interface SettingsTypeConfig extends BaseTypeConfig {
 export interface SettingsType extends BaseType {
   config: SettingsTypeConfig;
   actions: Array<SettingsAction>;
+  permission: Record<string, unknown>;
 }
