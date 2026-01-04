@@ -123,8 +123,13 @@ export class EntryGroup {
     });
   }
 
-  async deleteEntry(entryType: string, id: IDValue): Promise<void> {
-    return await this.#call<void>("entry", "deleteEntry", { entryType, id });
+  async deleteEntry(
+    entryType: string,
+    id: IDValue,
+  ): Promise<{ deleted: boolean; entryType: string; id: string }> {
+    return await this.#call<
+      { deleted: boolean; entryType: string; id: string }
+    >("entry", "deleteEntry", { entryType, id });
   }
 
   async runEntryAction(
