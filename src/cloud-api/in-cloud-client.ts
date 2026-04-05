@@ -60,7 +60,7 @@ export class InCloudClient {
       onRedirect?: (url: string, response: Response) => void;
     },
   ) {
-    this.#host = host || "/api";
+    this.#host = host || `${globalThis.location.origin}/api`;
     this.#filesEndpoint = `${this.#host}?group=files&action=getFile&fileId=`;
     const { onNotify, onRedirect } = options || {};
     this.headers = new Headers();
