@@ -39,6 +39,7 @@ export type InFieldMap = {
   TimeField: TimeField;
   CodeField: CodeField;
   ArrayField: ArrayField;
+  AddressField: AddressField;
 };
 
 /**
@@ -151,7 +152,9 @@ export interface EmailField extends BaseField {
   type: "EmailField";
   defaultValue?: InValue<"EmailField">;
 }
-
+export interface AddressField extends BaseField {
+  type: "AddressField";
+}
 export interface ImageField extends BaseField {
   type: "ImageField";
   defaultValue?: InValue<"ImageField">;
@@ -358,6 +361,13 @@ type InValueTypeMap = {
   TimeField: string;
   CodeField: string;
   ArrayField: number[] | string[];
+  AddressField: {
+    streetAddress: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+  };
 };
 
 export type IDMode = "uuid" | "ulid" | "auto";
