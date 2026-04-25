@@ -41,9 +41,9 @@ export class EntryGroup {
     return await this.#call<T>("entry", "getNewEntry", { entryType });
   }
 
-  async createEntry<T = Entry>(
+  async createEntry<T = Record<string, any>>(
     entryType: string,
-    entry: Record<string, InValue>,
+    entry: Record<string, any>,
   ): Promise<T> {
     return await this.#call<T>("entry", "createEntry", {
       entryType,
@@ -64,7 +64,7 @@ export class EntryGroup {
       },
     );
   }
-  async updateEntry<T = Record<string, InValue>>(
+  async updateEntry<T = Record<string, any>>(
     entryType: string,
     id: IDValue,
     entry: T,
