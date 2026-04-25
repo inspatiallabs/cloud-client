@@ -1,10 +1,11 @@
-import { InFilter } from "../cloud-api/api-client-types.ts";
+import type { InFilter } from "../cloud-api/api-client-types.ts";
 import type { FileTypes, ImageFileType } from "./file-types.ts";
 
 export type InFieldType = keyof InFieldMap;
 export type InField<T extends InFieldType = InFieldType> = InFieldMap[T];
 export type InValue<T extends keyof InValueTypeMap = keyof InValueTypeMap> =
-  InValueTypeMap[T];
+  | InValueTypeMap[T]
+  | null;
 
 export type InFieldWithKey<
   K extends PropertyKey,
