@@ -123,11 +123,13 @@ export type InFilter =
   | FilterAll
     & {
       field: string;
+      child?: string;
       or?: Array<FilterAll>;
       and?: Array<FilterAll>;
     }
   | {
     field: string;
+    child?: string;
     or?: Array<FilterAll>;
     and?: Array<FilterAll>;
   };
